@@ -3,7 +3,7 @@ const sequelize = require('../config/connection');
 
 class BlogPost extends Model {
     static getSnippet(text, charIndex) {
-        if (!text[charIndex]) {
+        if (text.length >= charIndex) {
             return text;
         }
         let index = charIndex;
@@ -31,7 +31,7 @@ BlogPost.init(
             allowNull: false,
         },
         snippet: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -44,11 +44,11 @@ BlogPost.init(
     {
         hooks: {
             beforeCreate: async (userData) => {
-                userData.snippet = BlogPost.getSnippet(userData.text, 200);
+                userData.snippet = BlogPost.getSnippet(userData.content, 200);
                 return userData;
             },
             beforeUpdate: async (userData) => {
-                userData.snippet = BlogPost.getSnippet(userData.text, 200);
+                userData.snippet = BlogPost.getSnippet(userData.content, 200);
                 return userData;
             },
         },
