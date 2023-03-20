@@ -18,16 +18,16 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {{#if logged_in}}
-                        <li><button id="logout"><span class="glyphicon glyphicon-log-out">Log Out</span></button></li>
-                    {{#else}}
-                        <li><a href="/signup"><span class="glyphicon glyphicon-user">Sign Up</span></a></li>
-                        <li><a href="/login"><span class="glyphicon glyphicon-log-in">Log In</span></a></li>
+                    <li><button id="logout"><span class="glyphicon glyphicon-log-out">Log Out</span></button></li>
+                    {{else}}
+                    <li><a href="/signup"><span class="glyphicon glyphicon-user">Sign Up</span></a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in">Log In</span></a></li>
                     {{/if}}
                 </ul>
             </nav>
         </header>
         <main class="container">
-            {{ body }}
+            {{{ body }}}
         </main>
         <footer>
 
@@ -37,5 +37,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
         {{#if logged_in}}
         <script src="/js/logout.js"></script>
+        {{/if}}
     </body>
 </html>

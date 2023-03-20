@@ -1,0 +1,17 @@
+{{#each blogPosts as |blogPost|}}
+<div class="row justify-content-center my-2">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ blogPost.title }}</h3>
+                <h6 class="card-subtitle mb-2 text-muted">by {{ blogPost.user.name }}</h5>
+                <p class="card-text">{{ blogPost.snippet }}...</p>
+                <div class="text-right">
+                    <a href="/blog/{{ blogPost.id }}" class="card-link">Read more</a>
+                </div>
+                <p class="text-muted text-small text-right">{{ format_date blogPost.createdAt }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
