@@ -3,9 +3,28 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{ title }}</h3>
-                <h6 class="card-subtitle mb-2 text-muted">by {{ user.name }}, {{format_date createdAt}}</h5>
+                <h6 class="card-subtitle mb-2 text-sm text-muted">by {{ user.name }}, {{format_date createdAt}}</h5>
                 <p class="card-text">{{ content }}...</p>
             </div>
         </div>
     </div>
 </div>
+<div class="row justify-conent-center mt-3">
+    <div class="col-md-8">
+        <h5>Comments</h5>
+    </div>
+</div>
+{{#each comments as |comment|}}
+<div class="row justify-content-center my-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+            <p class="text-muted">#{{comment.id}} {{comment.user.name}} - {{format_date comment.createdAt}}</p>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{comment.content}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}

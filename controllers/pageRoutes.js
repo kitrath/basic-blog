@@ -30,11 +30,17 @@ router.get('/blog/:id', withAuth, async (req, res) => {
         const blogPostData = await BlogPost.findByPk(req.params.id, {
             include: [
                 { model: User, attributes: ['name'] },
-                { model: Comment },
+                { 
+                    model: Comment,
+                    include: [{ model: User, attributes: ['name'] }],
+                },
             ],
         });
         // TODO: Redirect to 404 on id not found 
         const blogPost = blogPostData.get({ plain: true });
+
+        // TODO: Remove
+        console.log(blogPost);
 
         res.render('blogpost', {
             ...blogPost,
