@@ -25,4 +25,25 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/blog/:id', withAuth, async (req, res) => {
+    try {
+        const blogPostData = await BlogPost.findByPk(req.params.id, {
+            include: [
+                { model: User, attributes: ['name'] },
+                { model: Comment },
+            ],
+        });
+        // TODO: Redirect to 404 on id not found 
+        const blogPost = blogPostData.get({ plain: true });
+
+        res.render('blogpost', {
+            ...blogPost,
+            logged_in: req.session.logged_in
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;
