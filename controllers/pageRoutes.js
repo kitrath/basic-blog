@@ -38,9 +38,12 @@ router.get('/blog/:id', withAuth, async (req, res) => {
         });
         // TODO: Redirect to 404 on id not found 
         const blogPost = blogPostData.get({ plain: true });
-
         // TODO: Remove
         console.log(blogPost);
+
+        // Add blog_post_id to session for logged in comment creation
+        // see /controllers/api/commentRoutes.js
+        req.session.blog_post_id = blogPost.id;
 
         res.render('blogpost', {
             ...blogPost,
