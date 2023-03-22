@@ -6,7 +6,7 @@ const handleLogin = async (e) => {
     const username = document.querySelector('#username-login').value.trim();
     const password = document.querySelector('#pwd-login').value.trim();
 
-    if (email && password) {
+    if (username && password) {
         const response = await fetch('/api/users/login', {
             method: 'POST',
             body: JSON.stringify({ username, password }),
@@ -17,7 +17,8 @@ const handleLogin = async (e) => {
         if (response.ok) {
             document.location.replace('/');
         } else if (response.status === 400) {
-            alert(response.body.message);
+            const jsonBody = await response.json();
+            alert(jsonBody.message);
         } else {
             alert('Failed to log in.');
         }

@@ -46,4 +46,13 @@ router.get('/blog/:id', withAuth, async (req, res) => {
     }
 });
 
+router.get('/login', (req, res) => {
+    // If user logged in, redirect to dashboard
+    if (req.session.logged_in) {
+        res.redirect('/dashboard');
+        return;
+    }
+    res.render('login');
+})
+
 module.exports = router;
