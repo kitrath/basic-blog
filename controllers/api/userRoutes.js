@@ -3,21 +3,24 @@ const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
     try {
-        // TODO: validate email format, passwords match
         const newUser = await User.create(req.body);
 
         req.session.save(() => {
             req.session.user_id = newUser.id;
             req.session.logged_in = true;
+            
+            res.status(201).json({
+                user: newUser,
+                message: `Successfully created user ${newUser.name}`
+            });
         });
 
-        res.status(200).json(newUser);
     } catch (err) {
         console.error(err);
 
-        if (err instanceof SequelizeUniqueConstraintError) {
-            req.status(400).json({
-                message: 'Username or email address already in use.'
+        if (err.name ==  'SequelizeUniqueConstraintError') {
+            res.status(400).json({
+                message: 'Username already in use.'
             });
             return;
         }
@@ -49,7 +52,7 @@ router.post('/login', async (req, res) => {
             req.session.user_id = user.id;
             req.session.logged_in = true;
             
-            res.json({ user, message: 'Successfully logged in!' });
+            res.status(200).json({ user, message: 'Successfully logged in!' });
         });
 
        
