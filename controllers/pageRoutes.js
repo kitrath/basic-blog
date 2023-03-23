@@ -38,8 +38,6 @@ router.get('/blog/:id', withAuth, async (req, res) => {
         });
         // TODO: Redirect to 404 on id not found 
         const blogPost = blogPostData.get({ plain: true });
-        // TODO: Remove
-        console.log(blogPost);
 
         // Add blog_post_id to session for logged in comment creation
         // see /controllers/api/commentRoutes.js
@@ -49,6 +47,27 @@ router.get('/blog/:id', withAuth, async (req, res) => {
             ...blogPost,
             logged_in: req.session.logged_in
         });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
+router.get('/dashboard', withAuth, async (req, res) => {
+    try {
+        const blogPostData = await BlogPost.findAll({
+            where: { user_id: req.session.user_id }
+        });
+
+        const blogPosts = blogPostData.map((blogPost) => {
+            return blogPost.get({ plain: true });
+        });
+
+        res.render('dashboard', {
+            ...blogPosts,
+            logged_in: req.session.logged_in
+        });
+
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
