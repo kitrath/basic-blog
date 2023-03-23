@@ -1,6 +1,6 @@
 <div class="row justify-content-center my-2">
-    <div class="col-md-4 mt-5">
-        <ul class="list-group">
+    <div class="col-lg-4 mt-5">
+        <ul class="list-group" id="blog-post-list">
             {{#each blogPosts as |post|}}
             <li class="list-group-item mb-1">
                 <div class="row">
@@ -8,22 +8,21 @@
                         {{post.title}}
                     </div>
                     <div class="col-sm-4 justify-content-end">
-                        <button type="button" class="btn btn-outline-danger btn-sm mb-2" data-action="delete" data-id={{post.id}}>Delete</button>
-                            <button type="button" class="btn btn-outline-primary btn-sm" data-action="edit" data-id={{post.id}}>Edit</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm mb-1" data-action="delete" data-id={{post.id}}>Delete</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm mb-1" data-action="edit" data-id={{post.id}}>Edit</button>
                         </div>
                 </div>
             </li>
             {{/each}}
         </ul>
     </div>
-    <div class="col-md-8">
+    <div class="col-lg-8">
         <div>
             <button type="button" class="btn btn-success float-right mb-2" id="post-new">New Post</button>
         </div>
         <form id="blog-post-editor">
             <div class="form-group">
-                <label for="post-title">Title</label>
-                <input type="text" id="post-title" class="form-control">
+                <input type="text" id="post-title" class="form-control" placeholder="Post Title">
             </div>
             <div class="form-group">
                 <textarea rows="16" class="form-control" id="post-content" placeholder="Write something..."></textarea>

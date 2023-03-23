@@ -2,3 +2,11 @@ textarea.form-control.comment-box {
     min-height: 200px;
     padding: 20px 20px 0 20px;
 }
+
+ul#blog-post-list > li > div > div > button {
+    min-width: 62px;
+}
+
+button#post-new {
+    display: none;
+}
