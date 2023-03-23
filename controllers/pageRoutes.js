@@ -12,8 +12,6 @@ router.get('/', async (req, res) => {
         const blogPosts = blogPostData.map((blogPost) => {
             return blogPost.get({ plain: true }); 
         });
-        // TODO: Remove
-        console.log(blogPosts);
         
         res.render('homepage', {
             blogPosts,
@@ -64,7 +62,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
         });
 
         res.render('dashboard', {
-            ...blogPosts,
+            blogPosts,
             logged_in: req.session.logged_in
         });
 
