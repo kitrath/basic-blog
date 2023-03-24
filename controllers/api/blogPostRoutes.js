@@ -32,7 +32,11 @@ router.get('/:id', withAuth, async (req, res) => {
 // req.body = {title, content}
 router.post('/', withAuth, async (req, res) => {
     try {
-        const blogPost = await BlogPost.create(req.body);
+        const blogPost = await BlogPost.create({
+            title: req.body.title,
+            content: req.body.content,
+            user_id: req.session.user_id,
+        });
         
         if (blogPost) {
             res.status(201).json({

@@ -86,6 +86,9 @@ const deletePost = async (e) => {
                 });
                 
                 if (response.ok) {
+                    // We have to clear a post to edit from the
+                    // editor becuase we lose the postId on refresh
+                    clearEditor();
                     document.location.reload();
                     return;
                 } else {
@@ -109,10 +112,11 @@ const stripTags = (mightBeHTML) => {
 
 const editPost = async (post) => {
     try {
+        // postToEditId (global) is set in displayPostInEditor()
         const response = await fetch(`/api/posts/${postToEditId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: post,
+            body: JSON.stringify(post),
         });
 
         if (response.ok) {
@@ -129,10 +133,10 @@ const editPost = async (post) => {
 
 const createPost = async (post) => {
     try {
-        const response = await fetch('api/posts', {
+        const response = await fetch('/api/posts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: post
+            body: JSON.stringify(post),
         });
         
         if (response.ok) {
@@ -146,5 +150,45 @@ const createPost = async (post) => {
         console.error(err);
     }
 };
+
+editForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const errDisplay = document.querySelector('#err-post-editor');
+    // Remove previous error message if one exists
+    if (errDisplay.hasChildNodes()) {
+        errDisplay.removeChild(errDisplay.firstChild);
+    }
+
+    const postTitle = titleInput.value.trim();
+    const postContent = contentTextarea.value.trim();
+
+    
+    let errMsg = document.createElement('p');
+    errMsg.style.color = 'red';
+
+    if (!postTitle && !postContent) return;
+
+    if (!postTitle) {
+        errMsg.textContent = 'Your blog post must have a title';
+        errDisplay.appendChild(errMsg);
+        return;
+    }
+
+    if (!postContent) {
+        errMsg.textContent = 'Your blog post must contain content';
+        errDisplay.appendChild(errMsg);
+        return;
+    }
+
+    const title = stripTags(postTitle);
+    const content = stripTags(postContent);
+
+    if (editFlag) {
+        editPost({ title, content });
+    } else {
+        createPost({ title, content });
+    }
+});
 // End IIFE
 })();
