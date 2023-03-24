@@ -2,7 +2,7 @@
 
 ## Description
 This basic blogging application allows users to create and manage their own blog posts, and to comment on the blog posts of other users.  Once a user has signed up by creating an account with a username and a password, they are able to author their first blog post by navigating to the dashboard.  Signed in users can see and create comments on all posts by choosing one from the homepage.<br><br>
-**[Basic Blog Live Example]()**
+**Basic Blog Live Example: [https://kitrath-basic-blog.herokuapp.com/](https://kitrath-basic-blog.herokuapp.com/)**
 ## Installation
 For local development:
 1. Clone this repository: `git clone git@github.com:kitrath/basic-blog`
